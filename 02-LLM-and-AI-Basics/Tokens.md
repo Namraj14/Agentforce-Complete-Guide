@@ -12,18 +12,7 @@ Before understanding any sentence, an AI model breaks the text into smaller piec
 
 > A token is a small piece of text that an AI model reads and processes.
 
----
 
-## Kid Version 👶
-
-Imagine a sentence is made of LEGO blocks.
-
-- Sentence = LEGO House
-- Token = Individual LEGO Block
-
-Before AI can understand the whole sentence, it first looks at each LEGO block (token).
-
----
 
 ## Example
 
