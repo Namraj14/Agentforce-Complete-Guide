@@ -233,6 +233,212 @@ These tokens are analyzed by the LLM to understand the user's intent and generat
 
 ---
 
+# Do Transformers Perform Tokenization?
+
+## Short Answer
+
+**No. Transformers do not perform tokenization.**
+
+Tokenization happens **before** the Transformer processes the input.
+
+---
+
+# Complete Flow
+
+```text
+Text
+ ↓
+Tokenization
+ ↓
+Tokens
+ ↓
+Embeddings
+ ↓
+Transformer
+ ↓
+Output
+```
+
+---
+
+# What Does Tokenization Do?
+
+Tokenization breaks a sentence into smaller pieces called **tokens**.
+
+### Example
+
+Input:
+
+```text
+I love Salesforce
+```
+
+Output:
+
+```text
+["I", "love", "Salesforce"]
+```
+
+### Purpose
+
+The AI cannot directly understand a sentence, so it first converts the sentence into tokens.
+
+---
+
+# What Does a Transformer Do?
+
+A Transformer receives the tokens and understands the relationships between them using a mechanism called **Attention**.
+
+It helps the AI understand:
+
+- Context
+- Meaning
+- Relationships between words
+- Intent of the sentence
+
+---
+
+## Example
+
+Sentence:
+
+```text
+The dog chased the ball because it was moving.
+```
+
+The Transformer analyzes all tokens and determines:
+
+```text
+it → ball
+```
+
+because "ball" is the thing that was moving.
+
+This understanding is achieved through the Attention mechanism.
+
+---
+
+# Responsibilities
+
+| Component | Responsibility |
+|------------|---------------|
+| Tokenizer | Breaks text into tokens |
+| Embeddings | Converts tokens into numbers |
+| Transformer | Understands relationships and context |
+| Output Layer | Generates predictions or responses |
+
+---
+
+# Real-World Example
+
+User Prompt:
+
+```text
+Show all open cases for Account ABC.
+```
+
+### Step 1: Tokenization
+
+```text
+["Show", "all", "open", "cases", "for", "Account", "ABC"]
+```
+
+### Step 2: Embeddings
+
+Convert tokens into numerical vectors.
+
+```text
+[0.12, 0.45, 0.89, ...]
+```
+
+### Step 3: Transformer
+
+Understands:
+
+- User wants information
+- Object = Cases
+- Status = Open
+- Account = ABC
+
+### Step 4: Response
+
+Generate the appropriate answer.
+
+---
+
+# Interview Question
+
+## Do Transformers Perform Tokenization?
+
+### Answer
+
+No. Tokenization is a separate preprocessing step that occurs before the Transformer.
+
+The Transformer receives tokens as input and uses Attention mechanisms to understand their relationships and context.
+
+---
+
+# Kid Version 👶
+
+Imagine a sentence is a puzzle.
+
+### Tokenizer
+
+Cuts the puzzle into small pieces.
+
+```text
+Sentence
+    ↓
+Puzzle Pieces
+```
+
+### Transformer
+
+Looks at all the pieces and figures out the complete picture.
+
+```text
+Puzzle Pieces
+      ↓
+Understands Picture
+```
+
+---
+
+# Easy Way to Remember
+
+```text
+Tokenizer → Breaks Words
+Transformer → Understands Words
+```
+
+Or
+
+```text
+Tokenizer = Cutter ✂️
+Transformer = Smart Brain 🧠
+```
+
+---
+
+# Key Takeaways
+
+✅ Tokenization happens before the Transformer
+
+✅ Tokenizer creates tokens
+
+✅ Transformer does not create tokens
+
+✅ Transformer understands relationships between tokens
+
+✅ Attention is the core mechanism used by Transformers
+
+✅ ChatGPT, Gemini, Claude, and Agentforce all use Transformers to understand and generate language
+
+---
+
+# One-Line Interview Answer
+
+> Tokenization breaks text into tokens, while a Transformer processes those tokens using Attention to understand context and generate meaningful outputs.
 # Interview Questions and Answers
 
 ---
