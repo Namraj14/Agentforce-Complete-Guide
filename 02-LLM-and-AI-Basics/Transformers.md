@@ -1,5 +1,5 @@
 # Transformers in AI
-
+#### A Transformer is an AI model that understands the relationship between words by looking at all the words in a sentence at the same time. It uses a technique called Attention to identify which words are important and how they are connected.
 ## Overview
 
 Transformers are a deep learning architecture that powers most modern Artificial Intelligence applications, including Large Language Models (LLMs) such as ChatGPT, Gemini, Claude, and Copilot.
