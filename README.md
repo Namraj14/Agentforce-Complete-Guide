@@ -4,20 +4,6 @@
 
 A complete Salesforce Agentforce learning repository covering:
 
-✅ Fundamentals
-✅ Agent Builder
-✅ Prompt Builder
-✅ Grounding
-✅ RAG
-✅ Data Cloud
-✅ Apex Integration
-✅ Flow Integration
-✅ Security
-✅ Projects
-✅ Interview Questions
-✅ Certification Notes
-✅ Hands-on Labs
-
 ## Learning Path
 
 1. Fundamentals
