@@ -564,3 +564,461 @@ No. MCP **uses** existing APIs or other interfaces behind the scenes. It provide
 ## Interview One-Liner
 
 > **MCP (Model Context Protocol) is an open standard that enables AI applications like ChatGPT or Agentforce to securely discover, connect to, and interact with external tools and data sources through a common protocol, reducing the need for custom integrations.**
+
+# What Exactly is an MCP Server?
+
+The **MCP Server is NOT the actual application** (like Salesforce or GitHub).
+
+It is a **translator (adapter)** that knows **how to talk to that application** and expose its capabilities in a standard MCP format.
+
+Think of it like a waiter in a restaurant.
+
+---
+
+# Restaurant Example
+
+Imagine this:
+
+```
+You (Customer)
+
+↓
+
+Waiter
+
+↓
+
+Kitchen
+
+↓
+
+Food
+```
+
+Who actually cooks the food?
+
+✅ Kitchen
+
+Who talks to you?
+
+✅ Waiter
+
+Who understands both you and the kitchen?
+
+✅ Waiter
+
+The **waiter is the MCP Server**.
+
+The **kitchen is Salesforce (or GitHub, SQL, etc.)**.
+
+---
+
+# Real Salesforce Example
+
+Suppose you ask ChatGPT:
+
+> Show my open cases.
+
+ChatGPT has no idea:
+
+- How to log in to Salesforce
+- Which API to call
+- What SOQL query to write
+- How Salesforce returns data
+
+It only knows:
+
+> "The user wants open cases."
+
+So what happens?
+
+```
+You
+
+↓
+
+ChatGPT
+
+↓
+
+MCP Server
+
+↓
+
+Salesforce
+
+↓
+
+Open Cases
+
+↓
+
+MCP Server
+
+↓
+
+ChatGPT
+
+↓
+
+You
+```
+
+Notice:
+
+**ChatGPT never talks directly to Salesforce.**
+
+The MCP Server does.
+
+---
+
+# Why Can't ChatGPT Talk Directly?
+
+Because every application is different.
+
+Salesforce has its own APIs.
+
+GitHub has different APIs.
+
+Slack has different APIs.
+
+SQL has SQL queries.
+
+Google Drive has another API.
+
+If ChatGPT had to learn every API, it would become extremely complicated.
+
+Instead,
+
+every application has an MCP Server.
+
+---
+
+# Think of MCP Server as a Translator
+
+Suppose:
+
+You only know English.
+
+Salesforce only understands Salesforce APIs.
+
+```
+English
+
+↓
+
+Translator
+
+↓
+
+Salesforce API
+```
+
+The translator is the MCP Server.
+
+---
+
+# What Does the MCP Server Actually Do?
+
+It mainly does five things.
+
+## 1. Receives the AI request
+
+ChatGPT says
+
+```
+Get all open cases.
+```
+
+The MCP Server receives it.
+
+---
+
+## 2. Understands the request
+
+It knows
+
+```
+"Open cases"
+
+means
+
+SELECT Id, CaseNumber, Status
+FROM Case
+WHERE Status='Open'
+```
+
+It converts the request into something Salesforce understands.
+
+---
+
+## 3. Calls Salesforce
+
+The MCP Server makes the API call.
+
+```
+Salesforce REST API
+
+↓
+
+Returns Records
+```
+
+---
+
+## 4. Formats the Result
+
+Salesforce returns something like
+
+```json
+{
+  "records":[
+      {
+        "CaseNumber":"000123",
+        "Status":"Open"
+      }
+  ]
+}
+```
+
+The MCP Server converts it into the standard MCP format.
+
+---
+
+## 5. Sends it Back
+
+Now ChatGPT receives
+
+```
+Case 000123
+
+Status : Open
+```
+
+Now ChatGPT can answer naturally.
+
+---
+
+# Visual Flow
+
+```
+User
+
+↓
+
+ChatGPT
+
+↓
+
+MCP Server
+
+↓
+
+Salesforce API
+
+↓
+
+Salesforce Database
+
+↓
+
+Salesforce API
+
+↓
+
+MCP Server
+
+↓
+
+ChatGPT
+
+↓
+
+User
+```
+
+---
+
+# Another Example (GitHub)
+
+User says
+
+```
+Show my Pull Requests.
+```
+
+The MCP Server knows
+
+```
+GET /repos/.../pulls
+```
+
+ChatGPT doesn't know that.
+
+The MCP Server does.
+
+---
+
+# Another Example (SQL Database)
+
+User
+
+```
+How many employees joined this month?
+```
+
+ChatGPT doesn't know SQL.
+
+The MCP Server writes
+
+```sql
+SELECT COUNT(*)
+FROM Employee
+WHERE JoiningDate >= '2026-07-01';
+```
+
+Executes it.
+
+Returns
+
+```
+25 employees.
+```
+
+---
+
+# Is MCP Server Different for Every Tool?
+
+YES.
+
+Usually each tool has its own MCP Server.
+
+Example
+
+```
+Salesforce MCP Server
+
+GitHub MCP Server
+
+Slack MCP Server
+
+Jira MCP Server
+
+Google Drive MCP Server
+
+MySQL MCP Server
+```
+
+Each one knows how to communicate with its own application.
+
+---
+
+# Why Not Connect Directly?
+
+Without MCP
+
+```
+ChatGPT
+
+↓
+
+Salesforce API
+
+↓
+
+GitHub API
+
+↓
+
+Slack API
+
+↓
+
+SQL
+
+↓
+
+Google API
+```
+
+ChatGPT would need separate code for every system.
+
+Very difficult.
+
+---
+
+With MCP
+
+```
+ChatGPT
+
+↓
+
+MCP
+
+↓
+
+Any Tool
+```
+
+Every tool follows the same protocol.
+
+---
+
+# Think of it Like a Universal Remote
+
+Imagine you have
+
+- Samsung TV
+- LG TV
+- Sony TV
+
+Each remote is different.
+
+Now imagine a **universal remote**.
+
+```
+Universal Remote
+
+↓
+
+Samsung
+
+↓
+
+LG
+
+↓
+
+Sony
+```
+
+You don't learn three remotes.
+
+You learn one.
+
+That's what MCP does for AI.
+
+The **MCP Server makes every tool look the same to the AI**.
+
+---
+
+# Interview Answer
+
+**What is an MCP Server?**
+
+An MCP Server is a software component that sits between an AI application and an external system. It exposes the external system's capabilities using the Model Context Protocol. The server receives requests from the AI, translates them into the application's native API or commands, executes them, formats the results, and returns them to the AI in a standardized way.
+
+---
+
+# One-Line Memory Trick
+
+**AI says:** "I need customer data."
+
+**MCP Server says:** "Don't worry, I'll talk to Salesforce for you."
+
+**Salesforce says:** "Here's the data."
+
+**MCP Server says:** "I'll format it so the AI understands."
+
+**AI says:** "Now I can answer the user."
