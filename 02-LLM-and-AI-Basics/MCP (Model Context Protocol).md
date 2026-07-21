@@ -1027,3 +1027,506 @@ An MCP Server is a software component that sits between an AI application and an
 **MCP Server says:** "I'll format it so the AI understands."
 
 **AI says:** "Now I can answer the user."
+
+# MCP (Model Context Protocol) - Interview Questions & Answers
+
+These are some of the most commonly asked interview questions on MCP, especially if you're interviewing for AI, Salesforce Agentforce, or GenAI-related roles.
+
+---
+
+# Q1. What is MCP?
+
+### Answer
+
+MCP (Model Context Protocol) is an open standard that enables AI models to securely communicate with external applications, databases, and tools using a common protocol.
+
+Instead of learning different APIs for every application, the AI communicates using MCP, while the MCP Server translates those requests into the application's native API.
+
+---
+
+# Q2. What is an MCP Server?
+
+### Answer
+
+An MCP Server is a software application that implements the Model Context Protocol.
+
+It acts as a bridge between the AI and an external application.
+
+Its responsibilities include:
+
+- Receiving requests from the AI
+- Calling the application's API
+- Retrieving data
+- Formatting the response according to the MCP protocol
+- Sending the response back to the AI
+
+---
+
+# Q3. What is the purpose of an MCP Server?
+
+### Answer
+
+The purpose of an MCP Server is to hide the complexity of an application's APIs from the AI.
+
+Instead of requiring the AI to understand thousands of different APIs, the MCP Server translates between the MCP protocol and the application's native API.
+
+---
+
+# Q4. Does the AI communicate directly with Salesforce?
+
+### Answer
+
+No.
+
+The AI communicates with the Salesforce MCP Server using the MCP protocol.
+
+The Salesforce MCP Server then communicates with Salesforce using Salesforce APIs.
+
+Flow:
+
+```text
+AI
+ ↓
+Salesforce MCP Server
+ ↓
+Salesforce REST API
+ ↓
+Salesforce Org
+```
+
+---
+
+# Q5. Is an MCP Server the same as MCP?
+
+### Answer
+
+No.
+
+**MCP** is the protocol (the communication standard).
+
+**MCP Server** is the software that implements that protocol and connects to an external system.
+
+Example:
+
+```
+HTTP → Protocol
+
+Web Server → Software
+
+Similarly,
+
+MCP → Protocol
+
+MCP Server → Software
+```
+
+---
+
+# Q6. What is an MCP Client?
+
+### Answer
+
+An MCP Client is the component inside the AI application that communicates with MCP Servers.
+
+For example:
+
+```
+ChatGPT
+
+↓
+
+MCP Client
+
+↓
+
+Salesforce MCP Server
+```
+
+The client sends requests and receives responses.
+
+---
+
+# Q7. Why do we need MCP?
+
+### Answer
+
+Every application has different APIs.
+
+Without MCP, AI would need to understand every API individually.
+
+MCP provides one common protocol for all integrations.
+
+This makes AI integrations:
+
+- Simpler
+- More scalable
+- Easier to maintain
+
+---
+
+# Q8. Can an MCP Server connect to multiple systems?
+
+### Answer
+
+Yes.
+
+An MCP Server can expose tools from multiple applications.
+
+However, in most real-world implementations, each application has its own MCP Server for easier maintenance.
+
+---
+
+# Q9. Does every application have an MCP Server?
+
+### Answer
+
+No.
+
+Applications typically provide APIs.
+
+An MCP Server is optional and must be built if AI needs to communicate with the application using the MCP protocol.
+
+Some vendors provide official MCP Servers, while others are developed by the community or by organizations themselves.
+
+---
+
+# Q10. What happens if an application doesn't have an MCP Server?
+
+### Answer
+
+If no MCP Server exists, you can build one.
+
+The MCP Server will:
+
+- Connect to the application's API
+- Implement the MCP protocol
+- Expose the application's capabilities to AI applications
+
+---
+
+# Q11. Can I build my own MCP Server?
+
+### Answer
+
+Yes.
+
+You can build an MCP Server using languages like:
+
+- Node.js
+- Python
+- Java
+- Go
+- C#
+
+The server follows the MCP specification and communicates with the target application's APIs.
+
+---
+
+# Q12. How does the AI understand an MCP Server?
+
+### Answer
+
+Both the AI's MCP Client and the MCP Server follow the same MCP specification.
+
+The AI sends requests using the MCP protocol.
+
+The MCP Server understands those requests, communicates with the external system, and returns responses in the same protocol.
+
+---
+
+# Q13. What is the difference between an API and an MCP Server?
+
+### Answer
+
+| API | MCP Server |
+|------|------------|
+| Exposes an application's functionality | Exposes that functionality to AI using MCP |
+| Application-to-application communication | AI-to-application communication |
+| Specific to each application | Uses one common protocol (MCP) |
+
+---
+
+# Q14. Does an MCP Server replace APIs?
+
+### Answer
+
+No.
+
+An MCP Server **uses existing APIs**.
+
+It sits on top of them and translates MCP requests into API calls.
+
+---
+
+# Q15. What are the main responsibilities of an MCP Server?
+
+### Answer
+
+An MCP Server:
+
+- Implements the MCP protocol
+- Authenticates with external systems
+- Calls APIs or databases
+- Retrieves data
+- Formats responses
+- Returns results to the AI
+
+---
+
+# Q16. Explain the complete MCP flow.
+
+### Answer
+
+```text
+User
+
+↓
+
+AI (ChatGPT / Agentforce)
+
+↓
+
+MCP Client
+
+↓
+
+MCP Server
+
+↓
+
+External API
+
+↓
+
+Application
+
+↓
+
+External API
+
+↓
+
+MCP Server
+
+↓
+
+MCP Client
+
+↓
+
+AI
+
+↓
+
+User
+```
+
+---
+
+# Q17. Can one AI connect to multiple MCP Servers?
+
+### Answer
+
+Yes.
+
+One AI application can connect to many MCP Servers.
+
+Example:
+
+```
+ChatGPT
+
+↓
+
+Salesforce MCP Server
+
+GitHub MCP Server
+
+Slack MCP Server
+
+SQL MCP Server
+```
+
+The AI uses the same MCP protocol for all of them.
+
+---
+
+# Q18. Can one MCP Server expose multiple tools?
+
+### Answer
+
+Yes.
+
+An MCP Server can expose multiple tools.
+
+Example:
+
+```
+Salesforce MCP Server
+
+↓
+
+Get Accounts
+
+↓
+
+Get Cases
+
+↓
+
+Create Lead
+
+↓
+
+Update Opportunity
+
+↓
+
+Delete Contact
+```
+
+Each tool performs a different task.
+
+---
+
+# Q19. What are MCP Tools?
+
+### Answer
+
+Tools are functions exposed by an MCP Server that the AI can invoke.
+
+Examples:
+
+```
+getCases()
+
+createLead()
+
+updateAccount()
+
+searchKnowledge()
+
+cancelOrder()
+```
+
+The AI selects the appropriate tool based on the user's request.
+
+---
+
+# Q20. What are MCP Resources?
+
+### Answer
+
+Resources are data sources that the MCP Server exposes to the AI.
+
+Examples:
+
+- Files
+- Documents
+- Database records
+- Knowledge articles
+- Configuration files
+
+The AI reads resources to answer questions or complete tasks.
+
+---
+
+# Q21. What are the benefits of MCP?
+
+### Answer
+
+- Standard communication protocol
+- Easy AI integrations
+- Reusable architecture
+- Supports multiple applications
+- Reduces custom integration code
+- Easier maintenance
+- Scalable
+
+---
+
+# Q22. Give a real Salesforce example.
+
+### Answer
+
+User:
+
+> Show all open cases assigned to me.
+
+Flow:
+
+```
+ChatGPT
+
+↓
+
+MCP Client
+
+↓
+
+Salesforce MCP Server
+
+↓
+
+Salesforce REST API
+
+↓
+
+Salesforce Org
+
+↓
+
+Salesforce REST API
+
+↓
+
+Salesforce MCP Server
+
+↓
+
+ChatGPT
+```
+
+Final Response:
+
+> You have 5 open cases assigned to you.
+
+---
+
+# Q23. Why is MCP becoming popular?
+
+### Answer
+
+As AI applications need to interact with more external systems, MCP provides a standardized, reusable way to connect AI to those systems without requiring custom integrations for each one.
+
+---
+
+# Interview One-Liners
+
+### What is MCP?
+
+> MCP is an open standard that enables AI models to communicate with external tools and applications using a common protocol.
+
+---
+
+### What is an MCP Server?
+
+> An MCP Server is software that implements the MCP protocol and translates AI requests into application-specific API calls.
+
+---
+
+### Why is MCP needed?
+
+> MCP removes the need for AI models to understand every application's unique API by providing a single standardized communication protocol.
+
+---
+
+### Does MCP replace APIs?
+
+> No. MCP builds on top of existing APIs and standardizes how AI applications access them.
+
+---
+
+### What is the biggest advantage of MCP?
+
+> It allows AI to integrate with many different systems using one consistent protocol instead of learning thousands of different APIs.
