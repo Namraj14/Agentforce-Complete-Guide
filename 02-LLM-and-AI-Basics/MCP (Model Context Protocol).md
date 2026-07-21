@@ -1530,3 +1530,142 @@ As AI applications need to interact with more external systems, MCP provides a s
 ### What is the biggest advantage of MCP?
 
 > It allows AI to integrate with many different systems using one consistent protocol instead of learning thousands of different APIs.
+
+# Q. Why can't AI communicate directly with Salesforce or other applications? Why do we need an MCP Server?
+
+## Answer
+
+AI cannot directly communicate with Salesforce or other applications because every application has its own unique APIs, authentication methods, request formats, and response formats.
+
+For example:
+
+- Salesforce uses Salesforce REST APIs and OAuth.
+- GitHub uses GitHub REST APIs and tokens.
+- Slack uses Slack Web APIs.
+- SQL databases use SQL queries instead of REST APIs.
+
+If AI had to communicate directly with every application, it would need built-in knowledge of thousands of different APIs, which would make it extremely complex and difficult to maintain.
+
+Instead, AI communicates using a single standard called **MCP (Model Context Protocol)**.
+
+The **MCP Server** acts as a translator between the AI and the application.
+
+It:
+- Receives the AI request.
+- Converts it into the application's native API.
+- Calls the application.
+- Receives the response.
+- Converts the response back into the MCP format.
+- Sends it to the AI.
+
+This allows the AI to use the same communication method for every external system while the MCP Server handles the application-specific details.
+
+---
+
+## Example
+
+Without MCP
+
+```text
+ChatGPT
+
+↓
+
+Needs to know
+
+Salesforce API
+
+GitHub API
+
+Slack API
+
+Jira API
+
+SQL
+
+Google Drive API
+
+Thousands more...
+```
+
+This is not scalable.
+
+---
+
+With MCP
+
+```text
+ChatGPT
+
+↓
+
+MCP Client
+
+↓
+
+Salesforce MCP Server
+
+↓
+
+Salesforce
+```
+
+or
+
+```text
+ChatGPT
+
+↓
+
+MCP Client
+
+↓
+
+GitHub MCP Server
+
+↓
+
+GitHub
+```
+
+The AI always speaks the same language (MCP), while each MCP Server knows how to communicate with its own application.
+
+---
+
+## Easy Real-Life Analogy
+
+Imagine you only speak English.
+
+You visit:
+
+- Japan
+- France
+- China
+
+Instead of learning three different languages, you hire a translator.
+
+The translator understands both languages.
+
+Similarly:
+
+```
+AI
+
+↓
+
+MCP Server
+
+↓
+
+Salesforce
+```
+
+The AI speaks MCP.
+
+The MCP Server speaks both MCP and the application's API.
+
+---
+
+## Interview One-Liner
+
+> AI doesn't communicate directly with Salesforce because every application has different APIs and authentication mechanisms. The MCP Server acts as a translator, converting standardized MCP requests into application-specific API calls and returning the results in a format the AI understands.
