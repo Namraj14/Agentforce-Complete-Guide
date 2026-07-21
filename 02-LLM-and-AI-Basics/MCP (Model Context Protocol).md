@@ -2,6 +2,9 @@
 
 ## What is MCP?
 
+MCP (Model Context Protocol) → The protocol (the rules)
+MCP Server → A software application that implements those rules and connects to external systems
+
 **MCP (Model Context Protocol)** is an **open standard** that allows AI models (like ChatGPT or Agentforce) to securely connect to external tools, applications, databases, and services.
 
 Think of it as a **USB-C port for AI**.
