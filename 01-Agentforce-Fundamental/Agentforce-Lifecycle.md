@@ -1,564 +1,571 @@
-# Agentforce Lifecycle
+# Agentforce Architecture
 
-The **Agentforce Lifecycle** is the complete journey of how an AI agent receives a user's request, understands it, retrieves the required data, performs actions, and returns a response.
+## What is Agentforce Architecture?
 
-Think of it as the **workflow** that Agentforce follows for every user request.
+Agentforce Architecture describes **how a user's request flows through Salesforce AI**, how it retrieves data securely, performs business actions, and returns a response.
+
+Think of it as the **end-to-end workflow** of Agentforce.
 
 ---
 
-# Agentforce Lifecycle Flow
+# High-Level Architecture
 
 ```text
-User
-   ↓
-User asks a question
-   ↓
-Agent receives the request
-   ↓
-Understands the intent
-   ↓
-Checks Guardrails
-   ↓
-Retrieves Data (Grounding)
-   ↓
-Plans what to do
-   ↓
-Executes Actions
-   ↓
-Generates Response
-   ↓
-Returns Response to User
+                     User
+                       │
+                       ▼
+              Agentforce Agent
+                       │
+         (Understands User Intent)
+                       │
+                       ▼
+               Prompt Builder
+                       │
+        (Creates AI Prompt with Context)
+                       │
+                       ▼
+          Einstein Trust Layer
+   (Security, Grounding, Permissions,
+      Masking, Audit, Safety Checks)
+                       │
+                       ▼
+            Large Language Model
+        (Reasoning & Response Generation)
+                       │
+                       ▼
+         Agentforce Decision Engine
+      (Chooses Tools / Actions to Run)
+                       │
+        ┌──────────────┼──────────────┐
+        ▼              ▼              ▼
+   Salesforce Data    Flows        Apex Actions
+        │              │              │
+        ├──────────────┼──────────────┤
+                       ▼
+              External APIs / MCP
+                       │
+                       ▼
+             External Applications
+      (ERP, GitHub, Slack, SAP, etc.)
+                       │
+                       ▼
+               Final AI Response
+                       │
+                       ▼
+                     User
 ```
 
 ---
 
-# Step 1: User Sends a Request
+# Step-by-Step Flow
 
-Everything starts when a user asks a question.
+## Step 1: User Sends a Request
 
-### Example
+Everything begins when a user asks a question.
 
-User:
+Example:
 
-> Cancel my order.
+```
+Cancel my order.
+```
 
 or
 
-> Create a support case.
+```
+Show my open cases.
+```
 
 ---
 
-# Step 2: Agent Receives the Request
+## Step 2: Agentforce Understands the Request
 
-The Agentforce Agent receives the request.
+The agent identifies the user's intent.
 
-It first reads and understands what the user is asking.
+Example:
 
-At this stage, it doesn't perform any action yet.
-
----
-
-# Step 3: Understand the Intent
-
-The AI identifies the **user's intent**.
-
-Intent means:
-
-> **What does the user actually want?**
-
-### Example
-
+```
 User:
 
-> I forgot my password.
+Cancel my order.
+
+↓
 
 Intent:
-
-```text
-Reset Password
-```
-
----
-
-Another example
-
-User:
-
-> My internet is not working.
-
-Intent:
-
-```text
-Create Support Request
-```
-
----
-
-# Step 4: Check Guardrails
-
-Before doing anything, Agentforce checks the guardrails.
-
-It verifies:
-
-- Is this request allowed?
-- Does the user have permission?
-- Is the request safe?
-- Does it follow company policies?
-
----
-
-### Example
-
-User:
-
-> Delete all customer records.
-
-Guardrail:
-
-❌ Not allowed.
-
-Response:
-
-> Sorry, I'm not authorized to perform that action.
-
----
-
-# Step 5: Retrieve Data (Grounding)
-
-Now the agent collects the required information.
-
-It may retrieve data from:
-
-- Salesforce Records
-- Knowledge Articles
-- Data Cloud
-- External APIs
-
-This process is called **Grounding**.
-
----
-
-### Example
-
-User:
-
-> What is the status of my case?
-
-Agent retrieves:
-
-```text
-Case Number : 00012345
-
-Status : In Progress
-
-Owner : Support Team
-```
-
-Now it has enough information to answer correctly.
-
----
-
-# Step 6: Plan the Next Steps
-
-The agent decides:
-
-> What should I do next?
-
-Unlike a traditional chatbot, Agentforce can plan multiple steps.
-
-### Example
-
-User:
-
-> Cancel my order.
-
-The plan might be:
-
-```text
-Find Order
-
-↓
-
-Check Order Status
-
-↓
-
-Verify Cancellation Eligibility
-
-↓
 
 Cancel Order
-
-↓
-
-Send Confirmation Email
 ```
 
-This planning is what makes Agentforce an AI agent instead of a simple chatbot.
+The AI understands **what the user wants**.
 
 ---
 
-# Step 7: Execute Actions
+## Step 3: Prompt Builder Creates the Prompt
 
-Now the agent performs the required work.
+Prompt Builder prepares the prompt that will be sent to the AI.
 
-Possible actions include:
+It combines:
+
+- Instructions
+- Salesforce data
+- User request
+- Business context
+
+Example:
+
+```
+You are a Customer Support Agent.
+
+Summarize this case.
+
+Use a professional tone.
+```
+
+---
+
+## Step 4: Einstein Trust Layer
+
+Before the prompt reaches the AI model, it passes through the Einstein Trust Layer.
+
+The Trust Layer:
+
+- Masks sensitive data
+- Checks user permissions
+- Retrieves Salesforce data (Grounding)
+- Applies security policies
+- Logs AI interactions
+- Filters unsafe content
+
+This ensures secure and compliant AI responses.
+
+---
+
+## Step 5: Large Language Model (LLM)
+
+The LLM analyzes the prompt and reasons about the user's request.
+
+The model:
+
+- Understands intent
+- Interprets context
+- Determines what information is needed
+- Helps generate a response
+
+**Note:** The LLM does **not** directly access Salesforce.
+
+---
+
+## Step 6: Agentforce Decision Engine
+
+After reasoning, Agentforce decides whether it needs to perform any actions.
+
+Examples:
 
 - Run a Flow
 - Execute Apex
-- Create Records
-- Update Records
-- Delete Records (if allowed)
-- Call External APIs
-- Send Emails
+- Create a Case
+- Update an Opportunity
+- Call an external API
+- Use an MCP Server
+
+If no action is required, it simply returns a response.
 
 ---
 
-### Example
+## Step 7: Perform Business Actions
 
-User:
+Agentforce can execute different types of actions.
 
-> Update my phone number.
+### Salesforce Actions
 
-Agent:
+- Create records
+- Update records
+- Delete records (if permitted)
+- Run Flow
+- Execute Apex
+- Query Salesforce data
 
-```text
-Find Customer
+### External Actions
 
-↓
+- Call REST APIs
+- Use MCP Servers
+- Connect to ERP systems
+- Access GitHub
+- Read Slack messages
 
-Update Account Record
+---
 
-↓
+## Step 8: Generate Final Response
 
-Save Changes
+Once the required work is complete, Agentforce prepares the final response.
+
+Example:
+
+```
+Your order has been cancelled successfully.
+
+Refund Amount:
+₹2,500
+
+Expected Refund:
+3–5 Business Days
 ```
 
-The task is completed automatically.
-
 ---
 
-# Step 8: Generate the Response
+## Step 9: Response Sent to User
 
-After completing the work, Agentforce prepares a response.
-
-Example
-
-> Your phone number has been updated successfully.
-
----
-
-Another example
-
-> Your support case has been created successfully.
-
-Case Number: 00012567
-
----
-
-# Step 9: Return the Response
-
-Finally, the response is sent back to the user.
+The response is returned to the user.
 
 Conversation complete.
 
 ---
 
-# Complete Example
+# Complete Architecture Example
 
-### User
+Customer asks:
 
-> Cancel my order.
+```
+Cancel my order.
+```
 
----
-
-### Step 1
-
-Receive request.
-
-↓
-
-### Step 2
-
-Understand intent.
-
-Intent:
+Flow:
 
 ```text
-Cancel Order
+User
+
+↓
+
+Agentforce
+
+↓
+
+Prompt Builder
+
+↓
+
+Einstein Trust Layer
+
+↓
+
+LLM
+
+↓
+
+Decision Engine
+
+↓
+
+Run Flow
+
+↓
+
+Salesforce
+
+↓
+
+Order Cancelled
+
+↓
+
+Generate Response
+
+↓
+
+User
 ```
-
-↓
-
-### Step 3
-
-Check guardrails.
-
-User has permission.
-
-↓
-
-### Step 4
-
-Retrieve Order Details.
-
-↓
-
-### Step 5
-
-Check if order is eligible for cancellation.
-
-↓
-
-### Step 6
-
-Run Flow or Apex Action.
-
-↓
-
-### Step 7
-
-Cancel Order.
-
-↓
-
-### Step 8
-
-Generate Response.
-
-↓
-
-### Step 9
-
-Return Response.
-
-> Your order has been cancelled successfully.
 
 ---
 
-# Lifecycle Diagram
+# Another Example (Using MCP)
+
+Customer asks:
+
+```
+Show my GitHub pull requests.
+```
+
+Flow:
 
 ```text
-          User
-            │
-            ▼
-   Receive Request
-            │
-            ▼
-   Understand Intent
-            │
-            ▼
-   Check Guardrails
-            │
-            ▼
- Retrieve Salesforce Data
-      (Grounding)
-            │
-            ▼
-      Plan the Task
-            │
-            ▼
-     Execute Actions
-            │
-            ▼
-    Generate Response
-            │
-            ▼
- Return Response to User
+User
+
+↓
+
+Agentforce
+
+↓
+
+LLM
+
+↓
+
+Decision Engine
+
+↓
+
+GitHub MCP Server
+
+↓
+
+GitHub API
+
+↓
+
+GitHub
+
+↓
+
+Results
+
+↓
+
+Agentforce
+
+↓
+
+User
 ```
 
 ---
 
-# Real Salesforce Example
+# Components of Agentforce Architecture
 
-### User
+## 1. User
 
-> Create a support case because my internet is not working.
+Starts the conversation.
 
-Agentforce:
+Example:
 
 ```
-Receives Request
-
-↓
-
-Understands Intent
-
-↓
-
-Checks User Permission
-
-↓
-
-Looks for Existing Cases
-
-↓
-
-Creates New Case
-
-↓
-
-Assigns Support Queue
-
-↓
-
-Sends Confirmation Email
-
-↓
-
-Returns Case Number
+Create a support case.
 ```
-
-Final Response:
-
-> Your support case has been created successfully.
->
-> Case Number: 00012567
 
 ---
 
-# Lifecycle vs Traditional Chatbot
+## 2. Agentforce
 
-| Traditional Chatbot | Agentforce |
-|---------------------|------------|
-| Receives question | Receives request |
-| Matches keywords | Understands intent |
-| Gives fixed reply | Retrieves Salesforce data |
-| No planning | Plans multiple steps |
-| No actions | Executes actions |
-| Ends conversation | Completes the business task |
+Receives the request and manages the conversation.
+
+Responsibilities:
+
+- Understand intent
+- Manage context
+- Decide next steps
+
+---
+
+## 3. Prompt Builder
+
+Creates the prompt using:
+
+- User request
+- Salesforce records
+- Instructions
+- Templates
+
+---
+
+## 4. Einstein Trust Layer
+
+Provides:
+
+- Security
+- Grounding
+- Data masking
+- Permission checks
+- Audit logging
+- Safety filtering
+
+---
+
+## 5. Large Language Model
+
+Performs:
+
+- Reasoning
+- Language understanding
+- Response generation
+
+Examples:
+
+- OpenAI models
+- Anthropic models
+- Gemini models (depending on configuration)
+
+---
+
+## 6. Decision Engine
+
+Determines:
+
+- Does the AI just answer?
+- Does it need Salesforce data?
+- Does it need to execute a Flow?
+- Does it need to call Apex?
+- Does it need an external tool?
+
+---
+
+## 7. Actions
+
+Possible actions include:
+
+- Flow
+- Apex
+- SOQL
+- REST API
+- Platform Events
+- Data Cloud
+- MCP Tools
+
+---
+
+## 8. Salesforce Platform
+
+Stores business data.
+
+Examples:
+
+- Accounts
+- Contacts
+- Cases
+- Opportunities
+- Leads
+
+---
+
+## 9. External Systems
+
+Examples:
+
+- GitHub
+- Slack
+- SAP
+- Jira
+- SQL Databases
+- ERP Systems
+
+Typically accessed through APIs or MCP Servers.
+
+---
+
+# Architecture Diagram (Detailed)
+
+```text
+                        User
+                          │
+                          ▼
+                 Agentforce Agent
+                          │
+             Understand User Intent
+                          │
+                          ▼
+                 Prompt Builder
+                          │
+                          ▼
+              Einstein Trust Layer
+    ┌─────────────────────────────────────┐
+    │ • Data Masking                      │
+    │ • Grounding                         │
+    │ • Access Control                    │
+    │ • Audit Trail                       │
+    │ • Safety Filtering                  │
+    └─────────────────────────────────────┘
+                          │
+                          ▼
+                Large Language Model
+                          │
+                          ▼
+               Agentforce Decision Engine
+          ┌───────────────┼────────────────┐
+          ▼               ▼                ▼
+     Salesforce       Flow/Apex      External APIs
+       Records                            │
+                                           ▼
+                                     MCP Server
+                                           │
+                                           ▼
+                                   External Systems
+                          │
+                          ▼
+                  Final AI Response
+                          │
+                          ▼
+                         User
+```
 
 ---
 
 # Easy Way to Remember
 
-| Step | Question |
-|------|----------|
-| Receive Request | What did the user ask? |
-| Understand Intent | What does the user want? |
-| Guardrails | Is it allowed? |
-| Grounding | What data do I need? |
-| Planning | What should I do? |
-| Actions | Perform the work |
-| Response | Tell the user the result |
+| Component | Purpose |
+|-----------|---------|
+| User | Asks the question |
+| Agentforce | Understands the request |
+| Prompt Builder | Builds the AI prompt |
+| Einstein Trust Layer | Protects and grounds data |
+| LLM | Reasons and generates responses |
+| Decision Engine | Chooses what actions to perform |
+| Actions | Runs Flow, Apex, APIs, MCP tools |
+| Salesforce | Stores business data |
+| External Systems | Provide additional data or services |
+| User | Receives the final answer |
 
 ---
 
 # Interview Questions
 
-## Q1. What is the Agentforce Lifecycle?
+## Q1. Explain the Agentforce Architecture.
 
 **Answer:**
 
-The Agentforce Lifecycle is the sequence of steps an AI agent follows to process a user's request, retrieve data, perform actions, and return a response.
+Agentforce Architecture starts with the user's request. The request is processed by Agentforce, Prompt Builder creates the prompt, the Einstein Trust Layer secures and grounds the data, the LLM reasons over the request, the Decision Engine selects the required actions, Salesforce Flows, Apex, APIs, or MCP tools are executed if needed, and the final response is returned to the user.
 
 ---
 
-## Q2. What happens after understanding the user's intent?
+## Q2. Where does Prompt Builder fit?
 
 **Answer:**
 
-The agent checks guardrails to ensure the request is allowed and the user has the necessary permissions.
+Prompt Builder creates the structured prompt by combining instructions, Salesforce data, and user input before sending it through the Einstein Trust Layer to the LLM.
 
 ---
 
-## Q3. What is Grounding in the lifecycle?
+## Q3. Why is the Einstein Trust Layer important?
 
 **Answer:**
 
-Grounding is the process of retrieving relevant Salesforce or external data so the AI can provide accurate and context-aware responses.
+It protects Salesforce data, enforces user permissions, masks sensitive information, grounds prompts with Salesforce data, filters unsafe content, and logs AI interactions.
 
 ---
 
-## Q4. Why is the planning step important?
+## Q4. Does the LLM access Salesforce directly?
 
 **Answer:**
 
-Planning allows Agentforce to determine the sequence of actions required to complete a task, making it capable of handling multi-step business processes.
+No. The LLM does not directly access Salesforce. Agentforce retrieves the required data through Salesforce services and the Einstein Trust Layer, then provides the necessary context to the model.
 
 ---
 
-## Q5. What types of actions can Agentforce execute?
+## Q5. Where does MCP fit into the architecture?
 
 **Answer:**
 
-Agentforce can run Flows, execute Apex, create or update Salesforce records, call external APIs, send emails, and perform other configured business actions.
-
----
-
-# Final Summary
-
-| Step | Description |
-|------|-------------|
-| 1. Receive Request | User submits a request. |
-| 2. Understand Intent | Identify what the user wants. |
-| 3. Check Guardrails | Verify permissions and policies. |
-| 4. Grounding | Retrieve relevant Salesforce data. |
-| 5. Planning | Decide the sequence of actions. |
-| 6. Execute Actions | Perform the required work. |
-| 7. Generate Response | Prepare the final answer. |
-| 8. Return Response | Send the result to the user. |
+MCP is used when Agentforce needs to interact with external applications. Agentforce communicates with an MCP Server, which translates MCP requests into the external application's native API calls and returns the results.
 
 ---
 
 # One-Line Memory Trick
 
-- **Receive** → What did the user ask?
-- **Intent** → What do they want?
-- **Guardrails** → Is it allowed?
-- **Grounding** → Get the right data.
-- **Planning** → Decide what to do.
-- **Actions** → Do the work.
-- **Response** → Tell the user the result.
+- **User** → Asks.
+- **Agentforce** → Understands.
+- **Prompt Builder** → Builds.
+- **Trust Layer** → Protects.
+- **LLM** → Reasons.
+- **Decision Engine** → Decides.
+- **Flow/Apex/API/MCP** → Acts.
+- **Response** → Returns.
 
 ## Interview One-Liner
 
-> **The Agentforce Lifecycle is the end-to-end process in which an AI agent receives a user's request, understands the intent, validates permissions through guardrails, retrieves grounded Salesforce data, plans the required steps, executes business actions, and returns an accurate response.**
-
-# Agent Lifecycle
-
-## Step 1
-
-User sends request.
-
-## Step 2
-
-Agent analyzes intent.
-
-## Step 3
-
-Topic identified.
-
-## Step 4
-
-Instructions evaluated.
-
-## Step 5
-
-Grounding performed.
-
-## Step 6
-
-Actions executed.
-
-## Step 7
-
-Response generated.
-
-## Step 8
-
-Response returned.
-
-## Example
-
-User:
-"Reset my password."
-
-Lifecycle:
-
-Request
-→ Intent Detection
-→ Topic Selection
-→ Execute Password Reset Flow
-→ Generate Confirmation
-→ Return Response
+> **Agentforce Architecture consists of the user request, Prompt Builder, Einstein Trust Layer, Large Language Model, Decision Engine, Salesforce actions, and optional external integrations through APIs or MCP, working together to securely understand requests, execute business processes, and return intelligent responses.**
