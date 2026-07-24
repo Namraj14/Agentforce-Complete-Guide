@@ -60,6 +60,424 @@ RAG = Librarian
 The librarian goes to the library, finds the correct book, gives it to the brain, and then the brain answers.
 
 ---
+# What is a Vector Database?
+
+A **Vector Database** is a specialized database designed to:
+
+- Store embeddings (vectors)
+- Perform semantic similarity search
+- Retrieve the most relevant information based on meaning instead of exact keywords
+
+Think of it as a database built specifically for AI applications like RAG.
+
+---
+
+# Is a Vector Database a Software?
+
+**Yes.**
+
+Just like MySQL, MongoDB, and PostgreSQL are database software, a Vector Database is also software.
+
+For example,
+
+```
+Relational Database
+
+↓
+
+MySQL
+Oracle
+SQL Server
+PostgreSQL
+```
+
+Similarly,
+
+```
+Vector Database
+
+↓
+
+Pinecone
+Milvus
+Weaviate
+Qdrant
+Chroma
+```
+
+
+Notice the difference.
+
+**Vector Database** is the category.
+
+**Pinecone** is one software that belongs to that category.
+
+Exactly like
+
+```
+Relational Database
+
+↓
+
+MySQL
+```
+
+MySQL is not "the" relational database.
+
+It is **one implementation** of a relational database.
+
+The same applies to Pinecone.
+
+---
+
+
+# Different Types of Databases
+
+```
+Database
+│
+├── Relational Database
+│      ├── MySQL
+│      ├── PostgreSQL
+│      ├── Oracle
+│      └── SQL Server
+│
+├── Document Database
+│      └── MongoDB
+│
+├── Key-Value Database
+│      └── Redis
+│
+├── Graph Database
+│      └── Neo4j
+│
+└── Vector Database
+       ├── Pinecone
+       ├── Milvus
+       ├── Weaviate
+       ├── Qdrant
+       ├── Chroma
+       └── FAISS (Library)
+```
+
+---
+
+# Popular Vector Database Software
+
+## 1. Pinecone ⭐⭐⭐⭐⭐
+
+One of the most popular cloud-based vector databases.
+
+### Features
+
+- Fully managed
+- Cloud-based
+- Easy to integrate
+- Highly scalable
+- Optimized for RAG applications
+
+### Best For
+
+- Production AI applications
+- Enterprise chatbots
+- Large RAG systems
+
+---
+
+## 2. Milvus ⭐⭐⭐⭐⭐
+
+Milvus is one of the world's most popular open-source vector databases.
+
+### Features
+
+- Open source
+- High performance
+- Handles billions of vectors
+- Distributed architecture
+
+### Best For
+
+- Enterprise applications
+- Large AI systems
+
+---
+
+## 3. Weaviate ⭐⭐⭐⭐☆
+
+An open-source vector database with built-in AI capabilities.
+
+### Features
+
+- Semantic search
+- Hybrid search
+- GraphQL API
+- Metadata filtering
+
+### Best For
+
+- AI search applications
+- Knowledge retrieval
+
+---
+
+## 4. Qdrant ⭐⭐⭐⭐☆
+
+A modern vector database built specifically for similarity search.
+
+### Features
+
+- Open source
+- REST API
+- Metadata filtering
+- High-speed vector search
+
+### Best For
+
+- RAG
+- Recommendation systems
+- Semantic search
+
+---
+
+## 5. Chroma (ChromaDB) ⭐⭐⭐⭐☆
+
+One of the easiest vector databases to learn.
+
+### Features
+
+- Lightweight
+- Open source
+- Easy to install
+- Beginner-friendly
+
+### Best For
+
+- Learning
+- Local development
+- Small RAG projects
+
+---
+
+## 6. FAISS
+
+FAISS is a little different.
+
+It is **NOT** a complete vector database.
+
+It is a **vector search library** developed by Meta.
+
+### Features
+
+- Extremely fast
+- Open source
+- Local vector search
+- High-performance similarity search
+
+### Important Note
+
+FAISS provides searching capabilities but does not include complete database features like:
+
+- User management
+- REST APIs
+- Built-in persistence
+- Metadata management
+
+Think of FAISS as a search engine rather than a complete database.
+
+---
+
+## 7. Elasticsearch
+
+Originally designed as a search engine.
+
+Today it also supports:
+
+- Vector search
+- Semantic search
+- Hybrid search
+
+### Best For
+
+Organizations already using Elasticsearch.
+
+---
+
+## 8. PostgreSQL + pgvector
+
+PostgreSQL can become a vector database by installing the **pgvector** extension.
+
+### Features
+
+- Store vectors
+- Perform similarity search
+- Use SQL along with vector search
+
+### Best For
+
+Companies already using PostgreSQL.
+
+---
+
+# Popularity Comparison
+
+| Software | Type | Best For |
+|------------|------|----------|
+| Pinecone | Managed Vector Database | Production RAG |
+| Milvus | Open Source Vector Database | Large Enterprise Systems |
+| Weaviate | Open Source Vector Database | AI Applications |
+| Qdrant | Open Source Vector Database | Fast Semantic Search |
+| Chroma | Open Source Vector Database | Learning & Development |
+| FAISS | Vector Search Library | Local Search |
+| PostgreSQL + pgvector | Relational Database + Vector Support | Existing PostgreSQL Users |
+| Elasticsearch | Search Engine + Vector Support | Hybrid Search |
+
+---
+
+# How Do They Fit Into RAG?
+
+Suppose you're building a chatbot.
+
+The architecture looks like this.
+
+```
+PDF
+
+↓
+
+Embedding Model
+
+↓
+
+Vector Database
+
+↓
+
+LLM
+
+↓
+
+Answer
+```
+
+Now replace "Vector Database" with an actual software.
+
+Example 1
+
+```
+PDF
+
+↓
+
+OpenAI Embedding Model
+
+↓
+
+Pinecone
+
+↓
+
+GPT
+
+↓
+
+Answer
+```
+
+Example 2
+
+```
+PDF
+
+↓
+
+Sentence Transformer
+
+↓
+
+Milvus
+
+↓
+
+Claude
+
+↓
+
+Answer
+```
+
+Example 3
+
+```
+PDF
+
+↓
+
+OpenAI Embeddings
+
+↓
+
+Qdrant
+
+↓
+
+Llama
+
+↓
+
+Answer
+```
+
+The architecture remains the same.
+
+Only the Vector Database software changes.
+
+---
+
+# Dedicated Vector Database vs Traditional Database
+
+Today there are two ways to store vectors.
+
+## Option 1
+
+Use a Dedicated Vector Database.
+
+Examples
+
+```
+Pinecone
+
+Milvus
+
+Qdrant
+
+Weaviate
+
+Chroma
+```
+
+These systems are built specifically for vectors.
+
+---
+
+## Option 2
+
+Use an Existing Database with Vector Support.
+
+Examples
+
+```
+PostgreSQL + pgvector
+
+MongoDB Atlas Vector Search
+
+Elasticsearch
+
+Azure AI Search
+```
+
+These databases were originally built for something else but later added vector search capabilities.
+
+---
 
 # Why Not Use a Normal SQL Database?
 
