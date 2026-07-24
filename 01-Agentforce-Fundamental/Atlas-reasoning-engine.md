@@ -365,3 +365,220 @@ Without Atlas, an LLM could generate responses but would not have a structured m
 # Interview One-Liner
 
 > **"The Atlas Reasoning Engine is Agentforce's orchestration layer. It understands user intent, selects the appropriate business context and actions, coordinates multi-step execution, and works with the LLM to deliver accurate, context-aware responses while following Salesforce business rules."**
+
+# What is Orchestration?
+
+## Definition
+
+**Orchestration** is the process of **coordinating multiple systems, services, tools, or actions in the correct sequence to achieve a specific goal**.
+
+An orchestration engine does **not** perform all the work itself. Instead, it acts like a coordinator that decides:
+
+* What needs to be done
+* Which component should perform the task
+* In what order the tasks should execute
+* What data should be passed between tasks
+* Whether additional actions are required
+* When the overall process is complete
+
+In Agentforce, this coordinator is the **Atlas Reasoning Engine**.
+
+---
+
+# Understanding Orchestration with a Real-Life Example
+
+Imagine you visit a restaurant and order a pizza.
+
+The waiter does not:
+
+* Cook the pizza
+* Prepare the ingredients
+* Generate the bill
+* Process the payment
+
+Instead, the waiter coordinates the entire process.
+
+```text
+Customer Places Order
+        │
+        ▼
+Waiter Takes Order
+        │
+        ▼
+Kitchen Prepares Food
+        │
+        ▼
+Cashier Generates Bill
+        │
+        ▼
+Waiter Serves Food
+        │
+        ▼
+Customer Pays
+```
+
+The waiter is **orchestrating** the process by ensuring every task happens in the correct order.
+
+Similarly, Atlas coordinates the work performed by different Salesforce components.
+
+---
+
+# Orchestration in Agentforce
+
+Suppose a customer says:
+
+> **"Cancel my order and refund my payment."**
+
+Atlas does not immediately generate a response.
+
+Instead, it coordinates the complete workflow.
+
+```text
+User Request
+      │
+      ▼
+Understand Intent
+      │
+      ▼
+Locate Customer
+      │
+      ▼
+Find Order
+      │
+      ▼
+Check Order Status
+      │
+      ▼
+Verify Refund Eligibility
+      │
+      ▼
+Cancel Order
+      │
+      ▼
+Issue Refund
+      │
+      ▼
+Send Confirmation
+      │
+      ▼
+Return Final Response
+```
+
+Notice that Atlas is **not performing every task itself**.
+
+Instead, it determines:
+
+* Which action should happen first
+* Which Salesforce tool should perform the action
+* Whether another action is required after receiving the result
+
+This coordination is called **orchestration**.
+
+---
+
+# What Does Atlas Orchestrate?
+
+Atlas coordinates several components inside Agentforce.
+
+```text
+User
+   │
+   ▼
+Atlas Reasoning Engine
+   │
+   ├── Topics
+   ├── Instructions
+   ├── Flow
+   ├── Apex
+   ├── REST APIs
+   ├── Prompt Templates
+   ├── Knowledge Search
+   └── Large Language Model (LLM)
+```
+
+Atlas decides:
+
+* Which component should be used
+* When it should be called
+* What information should be passed
+* What should happen after receiving the result
+* When the workflow has been completed
+
+---
+
+# Why is Atlas Called an Orchestration Engine?
+
+Atlas is called an orchestration engine because it **coordinates the complete execution workflow** rather than performing every task itself.
+
+For example, if the available actions are:
+
+* Get Customer
+* Get Order
+* Cancel Order
+* Refund Payment
+* Send Email
+
+Atlas might orchestrate them like this:
+
+```text
+Get Customer
+      │
+      ▼
+Get Order
+      │
+      ▼
+Check Order Status
+      │
+      ▼
+Cancel Order
+      │
+      ▼
+Refund Payment
+      │
+      ▼
+Send Confirmation Email
+```
+
+Atlas determines the sequence and coordinates the execution until the user's request is successfully completed.
+
+---
+
+# Simple Definition
+
+> **Orchestration is the process of coordinating multiple systems, services, or actions in the correct sequence to accomplish a business goal.**
+
+---
+
+# Interview Definition
+
+> **In Agentforce, orchestration refers to the coordination of the complete AI workflow. The Atlas Reasoning Engine orchestrates the process by understanding the user's intent, selecting the appropriate topics and instructions, invoking Salesforce actions such as Flows, Apex, or APIs in the correct order, evaluating the results of each action, and continuing the workflow until the user's request is fulfilled.**
+
+---
+
+# Easy Way to Remember
+
+| Real World                  | Agentforce              |
+| --------------------------- | ----------------------- |
+| Restaurant Manager / Waiter | Atlas Reasoning Engine  |
+| Chef                        | Flow, Apex, API         |
+| Customer                    | User                    |
+| Food Delivery               | Completed Business Task |
+
+Another simple analogy:
+
+| Component                  | Responsibility                                                      |
+| -------------------------- | ------------------------------------------------------------------- |
+| **LLM**                    | Understands language and generates responses                        |
+| **Flow / Apex / API**      | Performs the actual business operations                             |
+| **Atlas Reasoning Engine** | Coordinates the entire workflow and decides what should happen next |
+
+---
+
+# Key Takeaways
+
+* Orchestration means coordinating multiple tasks to achieve a goal.
+* Atlas is called an orchestration engine because it manages the execution workflow.
+* Atlas decides **what** should happen, **when** it should happen, and **which Salesforce component** should perform the work.
+* Atlas does not replace Flows, Apex, or APIs—it coordinates them.
+* Without orchestration, the LLM could generate text but would not be able to reliably complete business processes.
+
