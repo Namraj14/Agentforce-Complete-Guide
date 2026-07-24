@@ -1,8 +1,12 @@
 # What is Agentforce?
 
-Agentforce is Salesforce's AI Agent platform that allows organizations to build autonomous AI agents capable of understanding requests, reasoning over data, and executing actions.
+Agentforce is Salesforce's agentic AI platform that enables organizations to build intelligent AI agents capable of understanding user requests, reasoning through problems, and completing business tasks by interacting with Salesforce data and business processes.
 
-Unlike traditional chatbots that follow predefined decision trees, Agentforce can dynamically determine how to respond to a user's request.
+Unlike traditional chatbots that primarily answer questions, Agentforce can take action by invoking Flows, Apex, APIs, Prompt Templates, and other Salesforce capabilities to complete a user's request.
+
+In simple terms:
+
+Agentforce is an AI platform that allows AI agents to think, reason, and perform business operations within Salesforce.
 
 ## Definition
 
