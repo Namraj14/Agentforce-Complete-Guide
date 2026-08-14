@@ -663,3 +663,4 @@ Start with **read operations** before allowing AI-assisted changes to your Sales
 
 > **Note:** Salesforce MCP capabilities are evolving quickly. Always verify the current Salesforce documentation before using a configuration copied from an older MCP guide, particularly because Salesforce has introduced newer hosted MCP and agentic development capabilities.
 
+Refrence: https://developer.salesforce.com/docs/atlas.en-us.sfdx_dev.meta/sfdx_dev/sfdx_dev_mcp_get_started.htm
