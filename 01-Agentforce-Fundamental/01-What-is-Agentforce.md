@@ -2,6 +2,18 @@
 
 Agentforce is Salesforce's agentic AI platform that enables organizations to build intelligent AI agents capable of understanding user requests, reasoning through problems, and completing business tasks by interacting with Salesforce data and business processes.
 
+(Agentforce is Salesforce’s platform for building, deploying, and managing AI agents, It is not just one agent, and it is not merely a tool)
+
+| Term                   | What it means                                                                               |
+| ---------------------- | ------------------------------------------------------------------------------------------- |
+| **Agentforce**         | The **Salesforce platform/framework** for creating and running AI agents                    |
+| **Agent**              | An individual AI worker built using Agentforce                                              |
+| **Actions**            | Things the agent can actually do, such as invoke Apex, Flow, APIs, or Salesforce operations |
+| **Topics / Subagents** | Define what area of work the agent handles                                                  |
+| **Data / Grounding**   | Information the agent uses to make accurate decisions                                       |
+| **LLM**                | The underlying language model that reasons about the user's request                         |
+
+
 Unlike traditional chatbots that primarily answer questions, Agentforce can take action by invoking Flows, Apex, APIs, Prompt Templates, and other Salesforce capabilities to complete a user's request.
 
 In simple terms:
