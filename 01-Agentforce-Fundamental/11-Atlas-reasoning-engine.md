@@ -22,11 +22,13 @@ The **Atlas Reasoning Engine** is the **decision-making and orchestration engine
 
 Unlike a **Large Language Model (LLM)**, which is responsible for understanding and generating natural language, Atlas is responsible for **planning and coordinating the execution of business tasks**.
 
+
 In simple terms:
 
 > **The LLM provides intelligence, while Atlas provides orchestration.**
 
 ---
+Note:***Orchestration: Deciding what needs to happen, in what order, which tool/action should be used, and how the results should be combined to complete a task***
 
 # Why was Atlas Reasoning Engine Introduced?
 
